@@ -74,35 +74,37 @@ class _HomePageTwoState extends State<HomePageTwo> {
                   Row(
                     children: [
                       Expanded(
-                        child: TextFormField(
-                          controller: systemidcontroller,
-                          // readOnly: true,
-
-                          decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white.withOpacity(0.2),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide.none,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 12),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'System ID: ${systemidcontroller.text}',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
-                              suffixIcon: IconButton(
-                                  onPressed: () async {
-                                    String response = await insertsystemid();
+                              IconButton(
+                                onPressed: () async {
+                                  String response = await insertsystemid();
+                                  setState(() {
                                     systemidcontroller.text = response;
-                                  },
-                                  icon: Icon(
-                                    Icons.refresh,
-                                    color: Colors.white,
-                                  ))),
-                          style: TextStyle(color: Colors.white),
+                                  });
+                                },
+                                icon: Icon(
+                                  Icons.refresh,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(height: 10),
-                      // Icon(
-                      //   Icons.refresh_outlined,
-                      //   color: Colors.white,
-                      //   size: 30,
-                      // )
                     ],
                   ),
                   SizedBox(
@@ -167,72 +169,6 @@ class _HomePageTwoState extends State<HomePageTwo> {
                             color: Colors.white,
                           ),
                       itemCount: 10)
-                  // SizedBox(
-                  //   height: 230,
-                  //   child: ListView.separated(
-                  //     shrinkWrap: true,
-                  //     scrollDirection: Axis.horizontal,
-                  //     itemBuilder: (context, index) {
-                  //       return Container(
-                  //         height: 200,
-                  //         width: 200,
-                  //         decoration: BoxDecoration(
-                  //           borderRadius: BorderRadius.all(Radius.circular(10)),
-                  //           border: Border.all(color: Colors.white, width: 3),
-                  //           color: Colors.blue.shade700.withOpacity(0.5),
-                  //           boxShadow: [
-                  //             BoxShadow(
-                  //               color: Colors.black.withOpacity(0.3),
-                  //               spreadRadius: 3,
-                  //               blurRadius: 5,
-                  //               offset: Offset(0, 3),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //         child: Center(
-                  //           child: Text(
-                  //             "Device ${index + 1}",
-                  //             style: TextStyle(
-                  //               fontWeight: FontWeight.bold,
-                  //               color: Colors.white,
-                  //               fontSize: 18,
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       );
-                  //     },
-                  //     separatorBuilder: (context, index) => SizedBox(
-                  //       width: 15,
-                  //     ),
-                  //     itemCount: 10,
-                  //   ),
-                  // ),
-
-                  // --------------------------------------grid view=====================
-                  // Expanded(
-                  //   child: GridView.builder(
-                  //     shrinkWrap: true,
-                  //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  //         crossAxisCount: 2,
-                  //         crossAxisSpacing: 12,
-                  //         mainAxisSpacing: 50,
-                  //         mainAxisExtent: 150),
-                  //     itemBuilder: (context, index) {
-                  //       return Container(
-                  //         decoration: BoxDecoration(
-                  //             // color: Colors.white,
-                  //             color: const Color.fromARGB(255, 209, 217, 231),
-                  //             border:
-                  //                 Border.all(color: Colors.blueGrey, width: 5),
-                  //             borderRadius: BorderRadius.all(Radius.circular(5))),
-                  //         child: Center(
-                  //           child: Text("poco x3"),
-                  //         ),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
-                  // =================================================gggrid view end=======================================
                 ],
               ),
             ),

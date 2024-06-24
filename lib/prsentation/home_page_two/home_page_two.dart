@@ -11,6 +11,7 @@ class HomePageTwo extends StatefulWidget {
 class _HomePageTwoState extends State<HomePageTwo> {
   TextEditingController systemidcontroller = TextEditingController();
   TextEditingController answercontroller = TextEditingController();
+  dynamic res = "";
 
   @override
   void initState() {
@@ -18,19 +19,25 @@ class _HomePageTwoState extends State<HomePageTwo> {
     insertsystemid();
   }
 
-  String body = "";
-  void insertsystemid() async {
+  @override
+  void dispose() {
+    // Dispose the controller when the widget is disposed
+    systemidcontroller.dispose();
+    answercontroller.dispose();
+    super.dispose();
+  }
+
+  Future<String> insertsystemid() async {
     try {
       String uri =
           "https://cybot.avanzosolutions.in/cyberscan/select_recordscan.php";
-      var res = await http.get(Uri.parse(uri));
+      res = await http.get(Uri.parse(uri));
       print(res.body);
-      body = res.body;
-      // systemidcontroller.text = body;
-      setState(() {});
     } catch (e) {
       print(e);
     }
+    String body = res.body;
+    return body;
   }
 
   @override
@@ -69,6 +76,8 @@ class _HomePageTwoState extends State<HomePageTwo> {
                       Expanded(
                         child: TextFormField(
                           controller: systemidcontroller,
+                          // readOnly: true,
+
                           decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white.withOpacity(0.2),
@@ -77,8 +86,9 @@ class _HomePageTwoState extends State<HomePageTwo> {
                                 borderSide: BorderSide.none,
                               ),
                               suffixIcon: IconButton(
-                                  onPressed: () {
-                                    insertsystemid();
+                                  onPressed: () async {
+                                    String response = await insertsystemid();
+                                    systemidcontroller.text = response;
                                   },
                                   icon: Icon(
                                     Icons.refresh,
@@ -88,7 +98,6 @@ class _HomePageTwoState extends State<HomePageTwo> {
                         ),
                       ),
                       SizedBox(height: 10),
-                      Text(body),
                       // Icon(
                       //   Icons.refresh_outlined,
                       //   color: Colors.white,
@@ -150,7 +159,7 @@ class _HomePageTwoState extends State<HomePageTwo> {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         return Text(
-                          body,
+                          "",
                           style: TextStyle(color: Colors.white),
                         );
                       },
@@ -198,7 +207,7 @@ class _HomePageTwoState extends State<HomePageTwo> {
                   //     itemCount: 10,
                   //   ),
                   // ),
-              
+
                   // --------------------------------------grid view=====================
                   // Expanded(
                   //   child: GridView.builder(

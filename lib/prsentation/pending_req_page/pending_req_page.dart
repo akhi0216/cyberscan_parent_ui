@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
-class HomepageThree extends StatefulWidget {
-  const HomepageThree({super.key});
+class PendingRequestPage extends StatefulWidget {
+  const PendingRequestPage({super.key, required this.systemId});
 
+  final String systemId;
   @override
-  State<HomepageThree> createState() => _HomepageThreeState();
+  State<PendingRequestPage> createState() => _PendingRequestPageState();
 }
 
-class _HomepageThreeState extends State<HomepageThree> {
+class _PendingRequestPageState extends State<PendingRequestPage> {
+  bool isNotRefreshed = true;
+  bool isRefreshed = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,14 +37,14 @@ class _HomepageThreeState extends State<HomepageThree> {
           children: [
             InkWell(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HomepageThree(),
-                    ));
+                isNotRefreshed = false;
+                isRefreshed = true;
+                setState(() {});
               },
               child: Center(
-                child: Container(
+                child: Visibility(
+                  visible: isNotRefreshed,
+                  child: Container(
                     padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
                     width: 100,
                     decoration: BoxDecoration(
@@ -53,7 +56,26 @@ class _HomepageThreeState extends State<HomepageThree> {
                         "Refresh",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
-                    )),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Visibility(
+              visible: isRefreshed,
+              child: Container(
+                padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                width: 100,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Text(
+                    widget.systemId,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
               ),
             ),
           ],

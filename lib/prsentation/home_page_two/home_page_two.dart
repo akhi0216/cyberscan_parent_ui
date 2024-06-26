@@ -1,6 +1,6 @@
 import 'package:cyberscan_parent_ui/constants/color_constants.dart';
 import 'package:cyberscan_parent_ui/prsentation/connection_req_page/connection_req_page.dart';
-import 'package:cyberscan_parent_ui/prsentation/homepage_three/homepage_three.dart';
+import 'package:cyberscan_parent_ui/prsentation/pending_req_page/pending_req_page.dart';
 import 'package:cyberscan_parent_ui/prsentation/login_page/login_page.dart';
 
 import 'package:flutter/material.dart';
@@ -54,6 +54,22 @@ class _HomePageTwoState extends State<HomePageTwo> {
     return body;
   }
 
+  Future<String> connect() async {
+    try {
+      String uri = "https://cybot.avanzosolutions.in/cyberscan/scanupload.php";
+      var res = await http.post(Uri.parse(uri), body: {
+        "parentcontroller": response,
+        "childcontroller": childSystemIdController.text.trim(),
+      });
+      body = res.body;
+    } catch (e) {
+      print(e);
+    }
+    print(body);
+
+    return body;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -86,7 +102,10 @@ class _HomePageTwoState extends State<HomePageTwo> {
                   },
                 );
               },
-              child: Text("logout"))
+              child: Text(
+                "logout",
+                style: TextStyle(color: Colors.white),
+              ))
         ],
       ),
       body: Stack(
@@ -107,7 +126,9 @@ class _HomePageTwoState extends State<HomePageTwo> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => HomepageThree(),
+                            builder: (context) => PendingRequestPage(
+                              systemId: response,
+                            ),
                           ));
                     },
                     child: Container(
@@ -182,14 +203,23 @@ class _HomePageTwoState extends State<HomePageTwo> {
                   SizedBox(height: 20),
                   Center(
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ConnectionRequestPage(
-                                id: childSystemIdController.text.trim(),
-                              ),
-                            ));
+                      onPressed: () async {
+                        String connectvariable = await connect();
+                        print(connectvariable);
+                        connectvariable == "success"
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ConnectionRequestPage(
+                                    childId:
+                                        childSystemIdController.text.trim(),
+                                    parentId: response,
+                                  ),
+                                ))
+                            : ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    backgroundColor: ColorConstants.mainRed,
+                                    content: Text("ID is not valid")));
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue.shade900,

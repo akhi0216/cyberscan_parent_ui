@@ -2,9 +2,11 @@ import 'package:cyberscan_parent_ui/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
 class ConnectionRequestPage extends StatelessWidget {
-  const ConnectionRequestPage({super.key, required this.id});
+  const ConnectionRequestPage(
+      {super.key, required this.childId, required this.parentId});
 
-  final String id;
+  final String childId;
+  final String parentId;
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +16,9 @@ class ConnectionRequestPage extends StatelessWidget {
           gradient: ColorConstants.mainGradient,
         ),
         child: Center(
-          child: Text("There is no connection requests\n $id"),
+          child: Text("There is no connection requests\n$childId$parentId"),
         ),
-     ),
-);
-}
+      ),
+    );
+  }
 }

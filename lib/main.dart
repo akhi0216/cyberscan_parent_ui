@@ -1,4 +1,4 @@
-import 'package:cyberscan_parent_ui/prsentation/login_page/login_page.dart';
+import 'package:cyberscan_parent_ui/prsentation/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 void main(List<String> args) {
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: SplashScreen(),
       // home: HomePage(),
     );
   }

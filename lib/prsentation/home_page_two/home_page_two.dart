@@ -30,7 +30,7 @@ class _HomePageTwoState extends State<HomePageTwo> {
   Future<String> insertsystemid() async {
     try {
       String uri =
-          "https://cybot.avanzosolutions.in/cyberscan/select_recordscan.php";
+          "https://cybot.avanzosolutions.in/cyberscan/select_recordscan.php"; 
       res = await http.get(Uri.parse(uri));
       print(res.body);
     } catch (e) {

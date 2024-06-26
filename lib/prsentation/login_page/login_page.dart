@@ -14,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController loginusernamecontroller = TextEditingController();
   TextEditingController loginpasswordcontroller = TextEditingController();
   // bool isChecked = false;
+  bool passwordObscure = true;
   //2late Box box1;
   Future<void> insertrecord() async {
     if (loginusernamecontroller.text.isNotEmpty &&
@@ -76,124 +77,141 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          Image.network(
-            "https://i.pinimg.com/564x/20/06/ca/2006caf34cf7b8b08e12acc0340d1b5e.jpg",
-            fit: BoxFit.fitHeight,
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: NetworkImage(
+                    "https://i.pinimg.com/564x/20/06/ca/2006caf34cf7b8b08e12acc0340d1b5e.jpg"),
+                fit: BoxFit.cover)),
+        // Image.network(
+        //   "https://i.pinimg.com/564x/20/06/ca/2006caf34cf7b8b08e12acc0340d1b5e.jpg",
+        //   fit: BoxFit.fitHeight,
+        // ),
+        // Container(
+        //   color: Colors.black.withOpacity(0.5),
+        // ),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Spacer(),
+              ShaderMask(
+                shaderCallback: (bounds) => LinearGradient(
+                  colors: [Colors.blue, Colors.white],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ).createShader(bounds),
+                child: Text(
+                  'Hello, Welcome!',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors
+                        .white, // This color is not shown due to ShaderMask
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                controller: loginusernamecontroller,
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white.withOpacity(0.3),
+                  hintText: 'username',
+                  hintStyle: TextStyle(color: Colors.white),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide.none,
+                  ),
+                  prefixIcon: Icon(Icons.person, color: Colors.white),
+                ),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                controller: loginpasswordcontroller,
+                obscureText: true,
+                obscuringCharacter: "*",
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white.withOpacity(0.3),
+                  hintText: 'Password',
+                  prefixIcon: Icon(Icons.lock, color: Colors.white),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      passwordObscure ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        passwordObscure = !passwordObscure;
+                      });
+                    },
+                  ),
+                  hintStyle: TextStyle(color: Colors.white),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide.none,
+                  ),
+                  // prefixIcon: Icon(Icons.lock, color: Colors.white),
+                ),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  insertrecord();
+                  // Handle login action
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //       builder: (context) => HomePage(),
+                  //     ));
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'Login',
+                  style: TextStyle(color: Colors.blue, fontSize: 18),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "create an account,",
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RegisterPage(),
+                            ));
+                      },
+                      child: Text(
+                        "sign up!",
+                        style: TextStyle(color: Colors.white),
+                      ))
+                ],
+              ),
+              Spacer(),
+              Spacer(),
+              Spacer(),
+            ],
           ),
-          Container(
-            color: Colors.black.withOpacity(0.5),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 120,
-                ),
-                ShaderMask(
-                  shaderCallback: (bounds) => LinearGradient(
-                    colors: [Colors.blue, Colors.white],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ).createShader(bounds),
-                  child: Text(
-                    'Hello, Welcome!',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Colors
-                          .white, // This color is not shown due to ShaderMask
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20),
-                TextFormField(
-                  controller: loginusernamecontroller,
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white.withOpacity(0.3),
-                    hintText: 'UserName',
-                    hintStyle: TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide.none,
-                    ),
-                    prefixIcon: Icon(Icons.person, color: Colors.white),
-                  ),
-                ),
-                SizedBox(height: 20),
-                TextFormField(
-                  controller: loginpasswordcontroller,
-                  obscureText: true,
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white.withOpacity(0.3),
-                    hintText: 'Password',
-                    hintStyle: TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide.none,
-                    ),
-                    prefixIcon: Icon(Icons.lock, color: Colors.white),
-                  ),
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    insertrecord();
-                    // Handle login action
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //       builder: (context) => HomePage(),
-                    //     ));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: Text(
-                    'Login',
-                    style: TextStyle(color: Colors.blue, fontSize: 18),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "create an account,",
-                      style: TextStyle(color: Colors.blue),
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => RegisterPage(),
-                              ));
-                        },
-                        child: Text(
-                          "sign up!",
-                          style: TextStyle(color: Colors.white),
-                        ))
-                  ],
-                )
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -1,4 +1,3 @@
-import 'package:cyberscan_parent_ui/prsentation/home_page/home_page.dart';
 import 'package:cyberscan_parent_ui/prsentation/login_page/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -80,19 +79,12 @@ class _RegisterPageState extends State<RegisterPage> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // Image.asset(
-          //   'assets/background.jpg', // Add your background image here
-          //   fit: BoxFit.cover,
-          // ),
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  // ColorConstants.blueone,
-                  // ColorConstants.majentaone,
-
                   Colors.blue.shade900,
                   Colors.blue.shade700,
                   Colors.blue.shade500,
@@ -113,6 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    SizedBox(height: 60),
                     Text(
                       'Create an Account',
                       style: TextStyle(
@@ -176,27 +169,28 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     SizedBox(height: 20),
                     TextFormField(
-                        controller: phnumbercontroller,
-                        keyboardType: TextInputType.phone,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white.withOpacity(0.3),
-                          hintText: 'Phone Number',
-                          hintStyle: TextStyle(color: Colors.white),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none,
-                          ),
-                          prefixIcon: Icon(Icons.phone, color: Colors.white),
+                      controller: phnumbercontroller,
+                      keyboardType: TextInputType.phone,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.3),
+                        hintText: 'Phone Number',
+                        hintStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
                         ),
-                        validator: (value) {
-                          if (value != null && value.length >= 7) {
-                            return null;
-                          } else {
-                            return "Mobile number is required";
-                          }
-                        }),
+                        prefixIcon: Icon(Icons.phone, color: Colors.white),
+                      ),
+                      validator: (value) {
+                        if (value != null && value.length >= 7) {
+                          return null;
+                        } else {
+                          return "Mobile number is required";
+                        }
+                      },
+                    ),
                     SizedBox(height: 20),
                     TextFormField(
                       controller: mailidcontroller,
@@ -216,51 +210,67 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     SizedBox(height: 20),
                     TextFormField(
-                        controller: passwordcontroller,
-                        obscureText: true,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white.withOpacity(0.3),
-                          hintText: 'Password',
-                          hintStyle: TextStyle(color: Colors.white),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none,
-                          ),
-                          prefixIcon: Icon(Icons.lock, color: Colors.white),
+                      controller: passwordcontroller,
+                      obscureText: passwordObscure,
+                      obscuringCharacter: "*",
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.3),
+                        hintText: 'Password',
+                        hintStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
                         ),
-                        validator: (value) {
-                          if (value != null && value.length >= 5) {
-                            return null;
-                          } else {
-                            return "Please Enter a Valid Username";
-                          }
-                        }),
+                        prefixIcon: Icon(Icons.lock, color: Colors.white),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            passwordObscure
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              passwordObscure = !passwordObscure;
+                            });
+                          },
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value != null && value.length >= 5) {
+                          return null;
+                        } else {
+                          return "Please Enter a Valid Password";
+                        }
+                      },
+                    ),
                     SizedBox(height: 20),
                     TextFormField(
-                        controller: conpasswordcontroller,
-                        obscureText: true,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white.withOpacity(0.3),
-                          hintText: 'Confirm Password',
-                          hintStyle: TextStyle(color: Colors.white),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none,
-                          ),
-                          prefixIcon: Icon(Icons.lock, color: Colors.white),
+                      controller: conpasswordcontroller,
+                      obscureText: true,
+                      obscuringCharacter: "*",
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.3),
+                        hintText: 'Confirm Password',
+                        hintStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
                         ),
-                        validator: (value) {
-                          if (value != null &&
-                              value == passwordcontroller.text) {
-                            return null;
-                          } else {
-                            return "Password does not match";
-                          }
-                        }),
+                        prefixIcon: Icon(Icons.lock, color: Colors.white),
+                      ),
+                      validator: (value) {
+                        if (value != null && value == passwordcontroller.text) {
+                          return null;
+                        } else {
+                          return "Password does not match";
+                        }
+                      },
+                    ),
                     SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
@@ -284,9 +294,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: TextStyle(fontSize: 18, color: Colors.blue),
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -309,7 +317,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         )
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),

@@ -14,6 +14,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController loginusernamecontroller = TextEditingController();
   TextEditingController loginpasswordcontroller = TextEditingController();
+
+  String userName = "";
+  String password = "";
   // bool isChecked = false;
   bool passwordObscure = true;
 
@@ -41,8 +44,12 @@ class _LoginPageState extends State<LoginPage> {
           //   box1.put('email', loginusernamecontroller.text);
           //   box1.put('pass', loginpasswordcontroller.text);
           // }
+          userName = loginusernamecontroller.text.trim();
+          password = loginpasswordcontroller.text.trim();
           var box = Hive.box('loginBox');
           box.put('isLoggined', true);
+          box.put('userName', userName);
+          box.put('password', password);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
@@ -55,7 +62,11 @@ class _LoginPageState extends State<LoginPage> {
           Future.delayed(Duration(milliseconds: 1500), () {
             Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => HomePageTwo()),
+                MaterialPageRoute(
+                    builder: (context) => HomePageTwo(
+                          userName: userName,
+                          password: password,
+                        )),
                 (route) => false);
           });
           loginpasswordcontroller.clear();

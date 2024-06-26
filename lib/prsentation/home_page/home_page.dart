@@ -1,5 +1,3 @@
-import 'package:cyberscan_parent_ui/constants/color_constants.dart';
-// import 'package:cyberscan_parent_ui/presentation/home_page_two/home_page_two.dart';
 import 'package:cyberscan_parent_ui/prsentation/home_page_two/home_page_two.dart';
 import 'package:flutter/material.dart';
 
@@ -41,12 +39,12 @@ class _HomePageState extends State<HomePage> {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HomePageTwo(),
-                      ),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => HomePageTwo(),
+                    //   ),
+                    // );
                   },
                   child: Container(
                     height: 200,

@@ -15,13 +15,18 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     var box = Hive.box('loginBox');
+
+    bool isLoggined = box.get('isLoggined', defaultValue: false);
     Future.delayed(Duration(seconds: 2)).then(
       (value) {
-        if (box.get('isLoggined', defaultValue: false)) {
+        if (isLoggined) {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => HomePageTwo(),
+                builder: (context) => HomePageTwo(
+                  userName: box.get('userName', defaultValue: ""),
+                  password: box.get('password', defaultValue: ""),
+                ),
               ));
         } else {
           Navigator.pushReplacement(

@@ -1,6 +1,7 @@
 import 'package:cyberscan_parent_ui/prsentation/home_page_two/home_page_two.dart';
 import 'package:cyberscan_parent_ui/prsentation/register_page/register_page.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
@@ -15,6 +16,8 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController loginpasswordcontroller = TextEditingController();
   // bool isChecked = false;
   bool passwordObscure = true;
+
+  bool isLoggedin = true;
   //2late Box box1;
   Future<void> insertrecord() async {
     if (loginusernamecontroller.text.isNotEmpty &&
@@ -38,6 +41,8 @@ class _LoginPageState extends State<LoginPage> {
           //   box1.put('email', loginusernamecontroller.text);
           //   box1.put('pass', loginpasswordcontroller.text);
           // }
+          var box = Hive.box('loginBox');
+          box.put('isLoggined', true);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class PendingRequestPage extends StatefulWidget {
   const PendingRequestPage({super.key, required this.systemId});
@@ -11,6 +12,22 @@ class PendingRequestPage extends StatefulWidget {
 class _PendingRequestPageState extends State<PendingRequestPage> {
   bool isNotRefreshed = true;
   bool isRefreshed = false;
+  String body = "";
+
+  Future<String> requestPending() async {
+    try {
+      String uri =
+          "https://cybot.avanzosolutions.in/cyberscan/requestupload.php";
+      var res = await http
+          .post(Uri.parse(uri), body: {"requestcontroller": widget.systemId});
+      body = res.body;
+    } on Exception catch (e) {
+      print(e);
+    }
+    print(body);
+    return body;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +56,7 @@ class _PendingRequestPageState extends State<PendingRequestPage> {
               onTap: () {
                 isNotRefreshed = false;
                 isRefreshed = true;
+                requestPending(); 
                 setState(() {});
               },
               child: Center(

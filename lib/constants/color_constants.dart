@@ -24,4 +24,12 @@ class ColorConstants {
       Color(0xff2a5298),
     ],
   );
+  static const Gradient containerGradient = LinearGradient(
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+    colors: [
+      Color.fromARGB(255, 44, 113, 241),
+      Color.fromARGB(139, 0, 60, 163),
+    ],
+  );
 }
